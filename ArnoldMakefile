@@ -1,0 +1,21 @@
+JFLAGS = -g -d bin
+JC = javac
+MAIN_CLASS = ArnoldC
+
+build:
+	rm -rf bin
+	mkdir bin
+	$(JC) $(shell find . -name "*.java") $(JFLAGS)
+
+tests = $(shell find tests -name "*.ac")
+
+run:
+	mkdir output
+	$(foreach var, $(tests), java -cp bin $(MAIN_CLASS) $(var);)
+	
+doc:
+	mkdir docs
+	javadoc -version -author -d docs $(shell find . -name "*.java")
+
+clean:
+	rm -rf *.class bin output
